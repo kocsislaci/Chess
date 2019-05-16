@@ -5,6 +5,7 @@ class Queen :
 {
 public:
 	Queen();
+	Queen(bool);
 	~Queen();
 };
 

@@ -4,13 +4,14 @@ using namespace std;
 
 int main()
 {
-	Game game1;
-	char r = 'R';
-	game1.tempsetBoard(r);
+	Player player1("lajos",	1);
+	Player player2("bela", 0);
+	Game game1(player1, player2);
 	game1.print();
-	
-	
-	
+	game1.playGame();
 
+	
+	
+	
 	return 0;
 }

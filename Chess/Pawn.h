@@ -5,6 +5,7 @@ class Pawn :
 {
 public:
 	Pawn();
+	Pawn(bool);
 	~Pawn();
 };
 

@@ -5,7 +5,7 @@ class Rook :
 {
 public:
 	Rook();
-	void setValue();
+	Rook(bool);
 	~Rook();
 };
 

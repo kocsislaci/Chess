@@ -4,10 +4,18 @@
 
 Rook::Rook()
 {
+	this->xpos = 0;
+	this->ypos = 0;
 }
-void Rook::setValue()
+Rook::Rook(bool pisWhite)
 {
-	this->value = 5;
+	this->xpos = 0;
+	this->ypos = 0;
+	this->isWhite = pisWhite;
+	if (isWhite)
+		this->character = 'R';
+	else
+		this->character = 'r';
 }
 
 Rook::~Rook()

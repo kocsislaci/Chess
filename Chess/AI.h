@@ -1,9 +1,8 @@
+
+
 #pragma once
 #include "Player.h"
 
-enum difficulties {
-	easiest = 1, easy = 2, moderate = 3, hard = 4
-};
 
 
 class AI :
@@ -12,6 +11,7 @@ class AI :
 	char difficulty;
 public:
 	AI();
+	AI(std::string, bool);
 	void setDifficulty();
 	void getDifficulty();
 	~AI();

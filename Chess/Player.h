@@ -6,24 +6,23 @@
 #include "Bishop.h"
 #include "Knight.h"
 #include "Pawn.h"
+#include <math.h>
 
 class Player
 {
 protected:
-	const std::string name;
+	std::string name;
 	bool isWhite;
 	bool isItsTurn;
-	unsigned moveCounter;
 	Piece *pieces;
-	Piece *takenPieces;
 public:
 	Player();
-	void init();
-	void setColour();
-	void setItsTurn();
-	void getItsTurn();
-	void takeMove();
-	void castling();
+	Player(std::string, bool);
+	bool getIsWhite() const;
+	std::string getName() const;
+	Piece* getPieces() const;
+	int takeMove(char, char, char, char);
+	void setTakenPiece(char, char);
 	~Player();
 };
 

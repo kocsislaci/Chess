@@ -8,6 +8,7 @@ class King :
 	bool didMove;
 public:
 	King();
+	King(bool);
 	~King();
 };
 

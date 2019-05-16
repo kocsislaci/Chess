@@ -5,6 +5,7 @@ class Knight :
 {
 public:
 	Knight();
+	Knight(bool);
 	~Knight();
 };
 
