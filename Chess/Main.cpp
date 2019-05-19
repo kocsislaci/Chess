@@ -4,8 +4,8 @@ using namespace std;
 
 int main()
 {
-	Player player1("lajos",	1);
-	Player player2("bela", 0);
+	Player player1(true);
+	Player player2(false);
 	Game game1(player1, player2);
 	game1.print();
 	game1.playGame();

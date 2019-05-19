@@ -17,7 +17,8 @@ protected:
 	Piece *pieces;
 public:
 	Player();
-	Player(std::string, bool);
+	Player(bool);
+	Player(Player&);
 	bool getIsWhite() const;
 	std::string getName() const;
 	Piece* getPieces() const;

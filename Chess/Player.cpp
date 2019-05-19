@@ -5,9 +5,11 @@ Player::Player()
 {
 }
 
-Player::Player(std::string pname = "", bool pIsWhite = 1) : name(pname), isWhite(pIsWhite)
+Player::Player(bool pIsWhite)
 {
-	while (pname.empty() && name.empty())
+	this->isWhite = pIsWhite;
+	this->isItsTurn = pIsWhite;
+	while (name.empty())
 	{
 		std::cout << "Please choose a nickname (max 10 characters): ";
 		std::string temp;
@@ -29,9 +31,9 @@ Player::Player(std::string pname = "", bool pIsWhite = 1) : name(pname), isWhite
 		}
 		
 	}
+
 	pieces = new Piece[16];
 	int i;
-	
 	for (i = 0; i < 8; i++)
 	{
 		pieces[i] = Pawn(this->isWhite);
@@ -107,6 +109,19 @@ Player::Player(std::string pname = "", bool pIsWhite = 1) : name(pname), isWhite
 			pieces[15].setPos(4, 7);
 }
 
+Player::Player(Player& theOther)
+{
+	this->name = theOther.name;
+	this->isWhite = theOther.isWhite;
+	this->isItsTurn = theOther.isItsTurn;
+	this->pieces = new Piece[16];
+	for (int i = 0; i < 16; i++)
+	{
+		this->pieces[i] = theOther.pieces[i];
+	}
+	
+}
+
 bool Player::getIsWhite() const
 {
 	return this->isWhite;
@@ -121,52 +136,51 @@ Piece* Player::getPieces() const
 }
 int Player::takeMove(char xpos, char ypos, char toxpos, char toypos)
 {
-	char characterToMove;
-	int success;
+	char characterToMove = '\0';
+	int success = 0;
 	for (int i = 0; i < 16; i++)
 	{
 		if (pieces[i].getXPos() == xpos && pieces[i].getYPos() == ypos)
 		{
 			characterToMove = pieces[i].getChararcter();
 		}
-		switch (characterToMove)
-		{
-		case 'p':
-			if ((xpos - toxpos) == 0 && (ypos - toypos) == 1)
-				success = 1;
-			if (abs(double(xpos - toxpos)) == 1 && (ypos - toypos) == 1)
-				success = 2;
-			break;
-		case 'P':
-			if ((xpos - toxpos) == 0 && (toypos - ypos) == 1)
-				success = 1;
-			if (abs(double(xpos - toxpos)) == 1 && (toypos - ypos) == 1)
-				success = 2;
-			break;
-		case 'r':
-		case 'R':
-			
-			break;
-		case 'n':
-		case 'N':
-
-			break;
-		case 'b':
-		case 'B':
-
-			break;
-		case 'q':
-		case 'Q':
-
-			break;
-		case 'k':
-		case 'K':
-
-			break;
-		default:
-			break;
-		}
 	}
+	switch (characterToMove)
+	{
+	case 'p':
+		if ((xpos - toxpos) == 0 && (ypos - toypos) == 1)
+			success = 1;
+		if (abs(double(xpos - toxpos)) == 1 && (ypos - toypos) == 1)
+			success = 2;
+		break;
+	case 'P':
+		if ((xpos - toxpos) == 0 && (toypos - ypos) == 1)
+			success = 1;
+		if (abs(double(xpos - toxpos)) == 1 && (toypos - ypos) == 1)
+			success = 2;
+		break;
+	case 'r':
+	case 'R':
+		
+		break;
+	case 'n':
+	case 'N':
+		break;
+	case 'b':
+	case 'B':
+
+		break;
+	case 'q':
+	case 'Q':
+		break;
+	case 'k':
+	case 'K':
+
+		break;
+	default:
+		break;
+	}
+	success = 1;
 		return success;
 }
 void Player::setTakenPiece(char toxpos, char toypos)

@@ -86,11 +86,12 @@ void Game::move()
 	else
 	{
 		char xtemp, ytemp;
-		xtemp = sTemp.at(0);
-		xtemp -= 49; // convert to 0...7 depends on the letter
-		ytemp = sTemp.at(1) -1;
-		if (ytemp  <= 7 || ytemp >= 0 || xtemp <= 7 || xtemp >= 0)
+		if (sTemp.at(0) >= 97 && sTemp.at(0) <= 104 && sTemp.at(1) >= 49 && sTemp.at(1) <= 56) // based on ascii table
 		{
+			xtemp = sTemp.at(0) - 49 - 48; // convert to 0...7 depends on the letter char
+			ytemp = sTemp.at(1) - 1 - 48; // convert to 0...7 depends on the number char
+
+
 			bool isThereAPiece = 0;
 			switch (char(board[xtemp][ytemp]))
 			{
@@ -182,12 +183,13 @@ void Game::move()
 				std::cin >> sTemp;
 				if (sTemp.length() == 2)
 				{
-					char nextxtemp, nextytemp;
-					nextxtemp = sTemp.at(0);
-					nextxtemp -= 49; // convert to number
-					nextytemp = sTemp.at(1) -1;
-					if (nextytemp <= 7 || nextytemp >= 0 || nextxtemp <= 7 || nextxtemp >= 0)
+					if (sTemp.at(0) >= 97 && sTemp.at(0) <= 104 && sTemp.at(1) >= 49 && sTemp.at(1) <= 56) // based on ascii table
 					{
+						char nextxtemp, nextytemp;
+						nextxtemp = sTemp.at(0) - (49 + 48); // convert to 0...7 depends on the letter char
+					
+						nextytemp = sTemp.at(1) - 1 - 48; // convert to 0...7 depends on the number char
+					
 						int canMoveThat; // 0 == no, 1 == can, 2 == can and it takes another piece
 						if (isWhitesTurn)
 							canMoveThat = whitePlayer.takeMove(xtemp, ytemp, nextxtemp, nextytemp);
@@ -204,7 +206,7 @@ void Game::move()
 									whitePlayer.setTakenPiece(nextxtemp, nextytemp);
 							}
 							this->board[nextxtemp][nextytemp] = this->board[xtemp][ytemp];
-							this->board[xtemp][ytemp] = '0';
+							this->board[xtemp][ytemp] = '\0';
 							isWhitesTurn = !isWhitesTurn;
 							print();
 						}
@@ -215,7 +217,7 @@ void Game::move()
 					}
 					else
 					{
-						throw "Out of range.";
+						throw "One of the given coordinates is invalid.";
 					}
 				}
 				else
@@ -230,33 +232,25 @@ void Game::move()
 		}
 		else
 		{
-		throw "Out of range.";
+			throw "One of the given coordinates is invalid.";
 		}
+		
 	}
 }
+
 char Game::getPieceOnPosition(char xpos, char ypos) const
 {
 	return this->board[xpos][ypos];
 }
+
 void Game::setPieceOnPosition(char xpos, char ypos, char piece)
 {
 	this->board[xpos][ypos] = piece;
 }
 
-
-
 void Game::print() const
 {
 	cout << "   -------------------------------  ";
-	if (0) // latter feature start
-	{
-		cout << "P" << endl;
-	}
-	else
-	{
-		cout << " " << endl;
-	} // end
-
 	for (int i = 0; i < 8; i++)
 	{
 		if (i % 2 == 0)
@@ -280,18 +274,7 @@ void Game::print() const
 	}
 	cout << "   -------------------------------  " << endl 
 		 << "    A   B   C   D   E   F   G   H   " << endl;
-
-	if (0) // latter feature start
-	{
-		cout << "P" << endl;
-	}
-	else
-	{
-		cout << " " << endl;
-	} // end
 }
-
-
 
 Game::~Game()
 {
