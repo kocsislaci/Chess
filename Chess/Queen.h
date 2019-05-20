@@ -6,6 +6,7 @@ class Queen :
 public:
 	Queen();
 	Queen(bool);
+	bool move(char, char);
 	~Queen();
 };
 

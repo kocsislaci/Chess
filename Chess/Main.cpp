@@ -1,6 +1,5 @@
 ﻿#include <iostream>
 #include "Game.h"
-using namespace std;
 
 int main()
 {
@@ -9,9 +8,5 @@ int main()
 	Game game1(player1, player2);
 	game1.print();
 	game1.playGame();
-
-	
-	
-	
 	return 0;
 }

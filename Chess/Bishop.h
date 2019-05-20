@@ -6,6 +6,7 @@ class Bishop :
 public:
 	Bishop();
 	Bishop(bool);
+	bool move(char, char);
 	~Bishop();
 };
 

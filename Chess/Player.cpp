@@ -1,9 +1,6 @@
 #include "Player.h"
 #include <iostream>
 
-Player::Player()
-{
-}
 
 Player::Player(bool pIsWhite)
 {
@@ -29,84 +26,84 @@ Player::Player(bool pIsWhite)
 		{
 			std::cout << err << std::endl;
 		}
-		
 	}
 
-	pieces = new Piece[16];
+	pieces = new Piece*[16];
 	int i;
 	for (i = 0; i < 8; i++)
 	{
-		pieces[i] = Pawn(this->isWhite);
+		pieces[i] = new Pawn(this->isWhite);
 		if (this->isWhite)
-			pieces[i].setPos(i, 1);
+			pieces[i][0].setPos(i, 1);
+			
 		else
-			pieces[i].setPos(i, 6);
+			pieces[i][0].setPos(i, 6);
 	}
 
 	for (i = 8; i < 10; i++)
 	{
-		pieces[i] = Rook(this->isWhite);
+		pieces[i] = new Rook(this->isWhite);
 		if (i == 8)
 		{
 			if (this->isWhite)
-				pieces[i].setPos(0, 0);
+				pieces[i][0].setPos(0, 0);
 			else
-				pieces[i].setPos(0, 7);
+				pieces[i][0].setPos(0, 7);
 		}
 		else
 		{
 			if (this->isWhite)
-				pieces[i].setPos(7, 0);
+				pieces[i][0].setPos(7, 0);
 			else
-				pieces[i].setPos(7, 7);
+				pieces[i][0].setPos(7, 7);
 		}
 	}
 	for (i = 10; i < 12; i++)
 	{
-		pieces[i] = Knight(this->isWhite);
+		pieces[i] = new Knight(this->isWhite);
 		if (i == 10)
 		{
 			if (this->isWhite)
-				pieces[i].setPos(1, 0);
+				pieces[i][0].setPos(1, 0);
 			else
-				pieces[i].setPos(1, 7);
+				pieces[i][0].setPos(1, 7);
 		}
 		else
 		{
 			if (this->isWhite)
-				pieces[i].setPos(6, 0);
+				pieces[i][0].setPos(6, 0);
 			else
-				pieces[i].setPos(6, 7);
+				pieces[i][0].setPos(6, 7);
 		}
 	}
 	for (i = 12; i < 14; i++)
 	{
-		pieces[i] = Bishop(this->isWhite);
+		pieces[i] = new Bishop(this->isWhite);
 		if (i == 12)
 		{
 			if (this->isWhite)
-				pieces[i].setPos(2, 0);
+				pieces[i][0].setPos(2, 0);
 			else
-				pieces[i].setPos(2, 7);
+				pieces[i][0].setPos(2, 7);
 		}
 		else
 		{
 			if (this->isWhite)
-				pieces[i].setPos(5, 0);
+				pieces[i][0].setPos(5, 0);
 			else
-				pieces[i].setPos(5, 7);
+				pieces[i][0].setPos(5, 7);
 		}
 	}
-		pieces[14] = Queen(this->isWhite);
+		pieces[14] = new Queen(this->isWhite);
 		if (this->isWhite)
-			pieces[14].setPos(3, 0);
+			pieces[14][0].setPos(3, 0);
 		else
-			pieces[14].setPos(3, 7);
-		pieces[15] = King(this->isWhite);
+			pieces[14][0].setPos(3, 7);
+		pieces[15] = new King(this->isWhite);
 		if (this->isWhite)
-			pieces[15].setPos(4, 0);
+			pieces[15][0].setPos(4, 0);
 		else
-			pieces[15].setPos(4, 7);
+			pieces[15][0].setPos(4, 7);
 }
 
 Player::Player(Player& theOther)
@@ -114,86 +111,82 @@ Player::Player(Player& theOther)
 	this->name = theOther.name;
 	this->isWhite = theOther.isWhite;
 	this->isItsTurn = theOther.isItsTurn;
-	this->pieces = new Piece[16];
+	this->pieces = new Piece*[16];
+	int i;
+	for (i = 0; i < 8; i++)
+	{
+		pieces[i] = new Pawn(this->isWhite);
+	}
+	for (i = 8; i < 10; i++)
+	{
+		pieces[i] = new Rook(this->isWhite);
+	}
+	for (i = 10; i < 12; i++)
+	{
+		pieces[i] = new Knight(this->isWhite);
+	}
+	for (i = 12; i < 14; i++)
+	{
+		pieces[i] = new Bishop(this->isWhite);
+	}
+	pieces[14] = new Queen(this->isWhite);
+	pieces[15] = new King(this->isWhite);
 	for (int i = 0; i < 16; i++)
 	{
-		this->pieces[i] = theOther.pieces[i];
+		this->pieces[i][0] = theOther.pieces[i][0];
 	}
-	
 }
 
 bool Player::getIsWhite() const
 {
 	return this->isWhite;
 }
+
 std::string Player::getName() const
 {
 	return this->name;
 }
-Piece* Player::getPieces() const
+
+Piece** Player::getPieces() const
 {
 	return pieces;
 }
-int Player::takeMove(char xpos, char ypos, char toxpos, char toypos)
+
+bool Player::takeMove(char xpos, char ypos, char toxpos, char toypos)
 {
-	char characterToMove = '\0';
-	int success = 0;
+	bool success = 0;
 	for (int i = 0; i < 16; i++)
 	{
-		if (pieces[i].getXPos() == xpos && pieces[i].getYPos() == ypos)
+		if (pieces[i][0].getXPos() == xpos && pieces[i][0].getYPos() == ypos)
 		{
-			characterToMove = pieces[i].getChararcter();
+			success = pieces[i][0].move(toxpos, toypos);
+			if (success)
+			{
+				pieces[i][0].setPos(toxpos, toypos);
+			}
+			break;
 		}
 	}
-	switch (characterToMove)
-	{
-	case 'p':
-		if ((xpos - toxpos) == 0 && (ypos - toypos) == 1)
-			success = 1;
-		if (abs(double(xpos - toxpos)) == 1 && (ypos - toypos) == 1)
-			success = 2;
-		break;
-	case 'P':
-		if ((xpos - toxpos) == 0 && (toypos - ypos) == 1)
-			success = 1;
-		if (abs(double(xpos - toxpos)) == 1 && (toypos - ypos) == 1)
-			success = 2;
-		break;
-	case 'r':
-	case 'R':
-		
-		break;
-	case 'n':
-	case 'N':
-		break;
-	case 'b':
-	case 'B':
-
-		break;
-	case 'q':
-	case 'Q':
-		break;
-	case 'k':
-	case 'K':
-
-		break;
-	default:
-		break;
-	}
-	success = 1;
-		return success;
+	return success;
 }
+
 void Player::setTakenPiece(char toxpos, char toypos)
 {
 	for (int i = 0; i < 16; i++)
 	{
-		if (pieces[i].getXPos() == toxpos && pieces[i].getYPos() == toypos)
+		if (pieces[i][0].getXPos() == toxpos && pieces[i][0].getYPos() == toypos)
 		{
-			pieces[i].setTaken();
+			pieces[i][0].setTaken();
+			break;
 		}
 	}
 }
+
 Player::~Player()
 {
+	for (int i = 0; i < 16; i++)
+	{
+		delete[] pieces[i];
+	}
 	delete[] pieces;
 }

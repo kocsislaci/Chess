@@ -1,5 +1,5 @@
 #include "Knight.h"
-
+#include <math.h>
 
 
 Knight::Knight()
@@ -18,6 +18,15 @@ Knight::Knight(bool pisWhite)
 		this->character = 'n';
 }
 
+bool Knight::move(char toxpos, char toypos)
+{
+	if (((abs(this->xpos - toxpos) == 2)  && (abs(this->ypos - toypos) == 1)) || ((abs(this->xpos - toxpos) == 1) && (abs(this->ypos - toypos) == 2)))
+	{
+		return 1;
+	}
+	else
+		return 0;
+}
 
 Knight::~Knight()
 {

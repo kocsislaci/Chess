@@ -14,15 +14,14 @@ protected:
 	std::string name;
 	bool isWhite;
 	bool isItsTurn;
-	Piece *pieces;
+	Piece** pieces;
 public:
-	Player();
 	Player(bool);
 	Player(Player&);
 	bool getIsWhite() const;
 	std::string getName() const;
-	Piece* getPieces() const;
-	int takeMove(char, char, char, char);
+	Piece** getPieces() const;
+	bool takeMove(char, char, char, char);
 	void setTakenPiece(char, char);
 	~Player();
 };

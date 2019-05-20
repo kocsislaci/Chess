@@ -1,5 +1,5 @@
 #include "Rook.h"
-
+#include <math.h>
 
 
 Rook::Rook()
@@ -16,6 +16,16 @@ Rook::Rook(bool pisWhite)
 		this->character = 'R';
 	else
 		this->character = 'r';
+}
+
+bool Rook::move(char toxpos, char toypos)
+{
+	if ((abs(this->xpos - toxpos) == 0) || (abs(this->ypos - toypos) == 0))
+	{
+		return 1;
+	}
+	else
+		return 0;
 }
 
 Rook::~Rook()

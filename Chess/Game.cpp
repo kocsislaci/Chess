@@ -4,18 +4,14 @@ using namespace std;
 
 Game::Game(Player pWhitePlayer, Player pBlackPlayer): isThereAWinner(false), whitePlayer(pWhitePlayer), blackPlayer(pBlackPlayer)
 {
-	
-	Piece *temp = whitePlayer.getPieces();
 	for (int i = 0; i < 16; i++)
 	{
-		board[temp[i].getXPos()][temp[i].getYPos()] = temp[i].getChararcter();
+		board[whitePlayer.getPieces()[i][0].getXPos()][whitePlayer.getPieces()[i][0].getYPos()] = whitePlayer.getPieces()[i][0].getChararcter();
 	}
-	temp = blackPlayer.getPieces();
 	for (int i = 0; i < 16; i++)
 	{
-		board[temp[i].getXPos()][temp[i].getYPos()] = temp[i].getChararcter();
+		board[blackPlayer.getPieces()[i][0].getXPos()][blackPlayer.getPieces()[i][0].getYPos()] = blackPlayer.getPieces()[i][0].getChararcter();
 	}
-	
 }
 
 void Game::playGame()
@@ -23,7 +19,6 @@ void Game::playGame()
 	string sTemp;
 	char cTemp;
 	bool playerWantsToQuit = 0;
-
 	while (!isThereAWinner && !playerWantsToQuit)
 	{
 		std::cout << "Commands: (M)ove	(Q)uit" << std::endl;
@@ -90,8 +85,6 @@ void Game::move()
 		{
 			xtemp = sTemp.at(0) - 49 - 48; // convert to 0...7 depends on the letter char
 			ytemp = sTemp.at(1) - 1 - 48; // convert to 0...7 depends on the number char
-
-
 			bool isThereAPiece = 0;
 			switch (char(board[xtemp][ytemp]))
 			{
@@ -187,18 +180,15 @@ void Game::move()
 					{
 						char nextxtemp, nextytemp;
 						nextxtemp = sTemp.at(0) - (49 + 48); // convert to 0...7 depends on the letter char
-					
 						nextytemp = sTemp.at(1) - 1 - 48; // convert to 0...7 depends on the number char
-					
-						int canMoveThat; // 0 == no, 1 == can, 2 == can and it takes another piece
+						bool canMoveThat = 0; // 0 == no, 1 == can, 2 == can and it takes another piece
 						if (isWhitesTurn)
 							canMoveThat = whitePlayer.takeMove(xtemp, ytemp, nextxtemp, nextytemp);
 						else
 							canMoveThat = blackPlayer.takeMove(xtemp, ytemp, nextxtemp, nextytemp);
-
 						if (canMoveThat)
 						{
-							if (canMoveThat == 2)
+							if (this->board[nextxtemp][nextytemp] != '\0')
 							{
 								if (isWhitesTurn)
 									blackPlayer.setTakenPiece(nextxtemp, nextytemp);
@@ -250,7 +240,7 @@ void Game::setPieceOnPosition(char xpos, char ypos, char piece)
 
 void Game::print() const
 {
-	cout << "   -------------------------------  ";
+	cout << "   -------------------------------  " << endl;
 	for (int i = 0; i < 8; i++)
 	{
 		if (i % 2 == 0)
@@ -274,6 +264,11 @@ void Game::print() const
 	}
 	cout << "   -------------------------------  " << endl 
 		 << "    A   B   C   D   E   F   G   H   " << endl;
+}
+
+bool Game::getIsWhitesTurn() const
+{
+	return this->isWhitesTurn;
 }
 
 Game::~Game()

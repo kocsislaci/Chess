@@ -1,5 +1,5 @@
 #include "Bishop.h"
-
+#include <math.h>
 
 
 Bishop::Bishop()
@@ -18,6 +18,15 @@ Bishop::Bishop(bool pisWhite)
 		this->character = 'b';
 }
 
+bool Bishop::move(char toxpos, char toypos)
+{
+	if ((abs(this->xpos - toxpos) == abs(this->ypos - toypos)))
+	{
+		return 1;
+	}
+	else
+		return 0;
+}
 
 Bishop::~Bishop()
 {

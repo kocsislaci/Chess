@@ -6,6 +6,7 @@ class Rook :
 public:
 	Rook();
 	Rook(bool);
+	bool move(char, char);
 	~Rook();
 };
 

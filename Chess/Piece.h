@@ -8,16 +8,16 @@ protected:
 	char character;
 	char xpos;
 	char ypos;
-	bool isTaken = 0;
-	static unsigned value;
+	bool isTaken;
 public:
 	Piece();
 	Piece(bool);
+	virtual bool move(char, char) = 0;
 	void setPos(char x, char y);
 	void setTaken();
 	char getXPos() const;
 	char getYPos() const;
 	char getChararcter() const;
-	~Piece();
+	virtual ~Piece();
 };
 

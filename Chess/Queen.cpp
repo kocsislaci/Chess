@@ -1,5 +1,5 @@
 #include "Queen.h"
-
+#include <math.h>
 
 
 Queen::Queen()
@@ -16,6 +16,16 @@ Queen::Queen(bool pisWhite)
 		this->character = 'Q';
 	else
 		this->character = 'q';
+}
+
+bool Queen::move(char toxpos, char toypos) 
+{
+	if ((abs(this->xpos - toxpos) == abs(this->ypos - toypos)) || (abs(this->xpos - toxpos) == 0) || (abs(this->ypos - toypos) == 0))
+	{
+		return 1;
+	}
+	else
+		return 0;
 }
 
 Queen::~Queen()

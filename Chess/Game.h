@@ -2,8 +2,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "Human.h"
-#include "AI.h"
+#include "Player.h"
 
 
 
@@ -21,6 +20,7 @@ public:
 	void setPieceOnPosition(char, char, char);
 	void move();
 	void print() const;
+	bool getIsWhitesTurn() const;
 	~Game();
 };
 

@@ -6,6 +6,7 @@ class Knight :
 public:
 	Knight();
 	Knight(bool);
+	bool move(char, char);
 	~Knight();
 };
 

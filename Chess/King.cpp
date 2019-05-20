@@ -1,5 +1,5 @@
 #include "King.h"
-
+#include <math.h>
 
 
 King::King()
@@ -16,6 +16,16 @@ King::King(bool pisWhite)
 		this->character = 'K';
 	else
 		this->character = 'k';
+}
+
+bool King::move(char toxpos, char toypos) 
+{
+	if ((abs(this->xpos - toxpos) == 1) && (abs(this->ypos - toypos) == 1))
+	{
+		return 1;
+	}
+	else
+		return 0;
 }
 
 King::~King()
